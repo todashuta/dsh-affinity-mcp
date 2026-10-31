@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Affinity MCP ブリッジ",
+    "description": "Affinity by Canva をローカルのブリッジ経由でエージェントにつなぎ、アプリ内でのスクリプト実行や描画を可能にします。"
+  }
+}

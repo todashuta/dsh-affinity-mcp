@@ -1,0 +1,22 @@
+# Affinity by Canva の内蔵 MCP サーバーを、stdio の MCP 接続として DSH に挿す。
+#
+# bridge.mjs は Affinity が落ちていても常駐し、ツール呼び出しのたびに上流
+# （[::1]:6767/sse）へつなぎ直す。DSH の mcp-client は起動時に接続できないと
+# ツールを登録せず、切断後も再接続を諦めるため、この常駐プロセスを挟まないと
+# Affinity を後から起動しても DSH を再起動するまでツールが戻らない。
+#
+# args のパスは、このパッチを評価したときに createRequire(baseUrl) で自分の
+# パッケージを解決して求める。bundle はプロファイルの node_modules にリンク
+# されるので、絶対パスを書き込まずに同梱の bridge.mjs を指せる。
+- insert:
+    - id: affinity-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: affinity
+        transport: stdio
+        command: !!js process.execPath
+        args:
+          - !!js process.getBuiltinModule('node:module').createRequire(baseUrl).resolve('dsh-affinity-mcp/bridge.mjs')
+        # bridge.mjs 側の AFFINITY_MCP_TIMEOUT_MS と同じ 120 秒に揃える。
+        # 片方だけ短いと、切れた呼び出しのタイマーが bridge 側に残り続ける。
+        toolCallTimeoutMs: 120000

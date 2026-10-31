@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Affinity MCP bridge",
+    "description": "Connects Affinity by Canva to the agent through a local bridge, so the agent can run scripts and render documents in the app."
+  }
+}

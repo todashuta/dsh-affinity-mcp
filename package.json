@@ -1,0 +1,31 @@
+{
+  "name": "dsh-affinity-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bridge the Affinity by Canva MCP server into DSH as a stdio MCP connection",
+  "license": "MIT",
+  "exports": {
+    "./bridge.mjs": "./bridge.mjs",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "bridge.mjs",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22",
+    "dsh": ">=0.2.1-0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
